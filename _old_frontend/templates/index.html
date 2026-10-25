@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="TechZone AI Career Navigator helps students match their skills and interests to future-ready tech careers and courses." />
+  <title>TechZone AI Career Navigator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+  <div class="page-bg" aria-hidden="true">
+    <span class="orb orb-one"></span>
+    <span class="orb orb-two"></span>
+    <span class="orb orb-three"></span>
+  </div>
+
+  <header class="site-header">
+    <nav class="navbar container" aria-label="Main navigation">
+      <a href="#top" class="brand" aria-label="TechZone Academy home">
+        <img src="https://www.techzoneacademy.in/images/techzone_logo.png" alt="TechZone Academy logo" />
+        <span>TechZone Academy</span>
+      </a>
+
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <div id="nav-menu" class="nav-menu">
+        <a href="#hero">Home</a>
+        <a href="#assessment">Assessment</a>
+        <a href="#career-results">Recommendations</a>
+        <a href="#courses">Courses</a>
+        <a href="#contact">Contact</a>
+      </div>
+
+      <a class="nav-cta" href="#assessment">Start Now</a>
+    </nav>
+  </header>
+
+  <main id="top" class="container main-shell">
+    <section class="hero" id="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Future-ready careers</p>
+        <h1>Discover the career path that matches your <span>AI future</span>.</h1>
+        <p class="hero-text">
+          Measure your strengths, align them with TechZone Academy programs, and unlock a personalized roadmap for AI, data, cloud, product, and digital innovation careers.
+        </p>
+
+        <div class="hero-actions">
+          <a class="primary-button hero-button" href="#assessment">Take the assessment</a>
+          <a class="secondary-button hero-button" href="https://www.techzoneacademy.in/" target="_blank" rel="noopener">Explore courses</a>
+        </div>
+
+        <ul class="hero-stats" aria-label="Career analytics highlights">
+          <li><strong>AI-first</strong><span>skill tracking</span></li>
+          <li><strong>Career-fit</strong><span>recommendations</span></li>
+          <li><strong>Roadmaps</strong><span>with courses</span></li>
+        </ul>
+      </div>
+
+      <div class="hero-visual" aria-label="Career dashboard preview">
+        <div class="dashboard-panel glass-panel">
+          <div class="dashboard-top">
+            <div>
+              <span class="dot cyan"></span>
+              <span class="dot purple"></span>
+              <span class="dot blue"></span>
+            </div>
+            <span class="status-pill">Live Match</span>
+          </div>
+
+          <div class="dashboard-card main-track">
+            <p>Career Match Score</p>
+            <h3>92%</h3>
+            <div class="mini-bar"><span></span></div>
+          </div>
+
+          <div class="dashboard-grid">
+            <div class="dashboard-card small-card">
+              <span class="chip-label">Top Fit</span>
+              <strong>AI Engineer</strong>
+            </div>
+            <div class="dashboard-card small-card accent-card">
+              <span class="chip-label">Next step</span>
+              <strong>Gen AI Eng.</strong>
+            </div>
+          </div>
+
+          <div class="dashboard-list">
+            <div><span>Skills matched</span><strong>12</strong></div>
+            <div><span>Course path</span><strong>3 steps</strong></div>
+            <div><span>Focus area</span><strong>AI/ML</strong></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="assessment" class="assessment-section">
+      <div class="section-heading">
+        <p class="eyebrow">Student assessment</p>
+        <h2>Find your best-fit career track</h2>
+      </div>
+
+      <div class="app-layout">
+        <section class="panel form-panel glass-panel">
+          <h2>Profile assessment</h2>
+
+          <form id="career-form">
+            <div class="form-grid compact">
+              <label class="field">
+                <span>Name (optional)</span>
+                <input id="student_name" type="text" placeholder="e.g. Aisha" />
+              </label>
+
+              <label class="field">
+                <span>Current learning level</span>
+                <select id="learning_level">
+                  <option value="Beginner">Beginner</option>
+                  <option value="Intermediate" selected>Intermediate</option>
+                  <option value="Advanced">Advanced</option>
+                </select>
+              </label>
+
+              <label class="field wide">
+                <span>Career goal</span>
+                <select id="career_goal">
+                  <option value="AI & ML">AI & ML</option>
+                  <option value="Data & Analytics">Data & Analytics</option>
+                  <option value="Cloud & DevOps">Cloud & DevOps</option>
+                  <option value="Product & Strategy">Product & Strategy</option>
+                  <option value="Cybersecurity">Cybersecurity</option>
+                  <option value="Web & Full-Stack">Web & Full-Stack</option>
+                  <option value="Marketing & Growth">Marketing & Growth</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="skills-section">
+              <h3>Technical skill ratings</h3>
+              <div class="slider-grid">
+                <label class="slider-field">
+                  <span>Python</span>
+                  <div class="slider-row">
+                    <input type="range" min="0" max="5" value="3" data-skill="Python" />
+                    <strong class="slider-value">3</strong>
+                  </div>
+                </label>
+
+                <label class="slider-field">
+                  <span>SQL</span>
+                  <div class="slider-row">
+                    <input type="range" min="0" max="5" value="2" data-skill="SQL" />
+                    <strong class="slider-value">2</strong>
+                  </div>
+                </label>
+
+                <label class="slider-field">
+                  <span>Data Analysis</span>
+                  <div class="slider-row">
+                    <input type="range" min="0" max="5" value="3" data-skill="Data Analysis" />
+                    <strong class="slider-value">3</strong>
+                  </div>
+                </label>
+
+                <label class="slider-field">
+                  <span>Machine Learning</span>
+                  <div class="slider-row">
+                    <input type="range" min="0" max="5" value="2" data-skill="Machine Learning" />
+                    <strong class="slider-value">2</strong>
+                  </div>
+                </label>
+
+                <label class="slider-field">
+                  <span>Cloud Platforms</span>
+                  <div class="slider-row">
+                    <input type="range" min="0" max="5" value="2" data-skill="Cloud Platforms" />
+                    <strong class="slider-value">2</strong>
+                  </div>
+                </label>
+
+                <label class="slider-field">
+                  <span>Cybersecurity</span>
+                  <div class="slider-row">
+                    <input type="range" min="0" max="5" value="1" data-skill="Cybersecurity" />
+                    <strong class="slider-value">1</strong>
+                  </div>
+                </label>
+
+                <label class="slider-field">
+                  <span>Communication</span>
+                  <div class="slider-row">
+                    <input type="range" min="0" max="5" value="4" data-skill="Communication" />
+                    <strong class="slider-value">4</strong>
+                  </div>
+                </label>
+
+                <label class="slider-field">
+                  <span>Problem Solving</span>
+                  <div class="slider-row">
+                    <input type="range" min="0" max="5" value="4" data-skill="Problem Solving" />
+                    <strong class="slider-value">4</strong>
+                  </div>
+                </label>
+
+                <label class="slider-field">
+                  <span>Generative AI</span>
+                  <div class="slider-row">
+                    <input type="range" min="0" max="5" value="2" data-skill="Generative AI" />
+                    <strong class="slider-value">2</strong>
+                  </div>
+                </label>
+
+                <label class="slider-field">
+                  <span>Product Management</span>
+                  <div class="slider-row">
+                    <input type="range" min="0" max="5" value="3" data-skill="Product Management" />
+                    <strong class="slider-value">3</strong>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <div class="choice-section">
+              <h3>My interests</h3>
+              <div class="chip-grid">
+                <label class="chip"><input type="checkbox" value="AI/ML" checked /> AI/ML</label>
+                <label class="chip"><input type="checkbox" value="Data" checked /> Data</label>
+                <label class="chip"><input type="checkbox" value="Business" /> Business</label>
+                <label class="chip"><input type="checkbox" value="Cloud" /> Cloud</label>
+                <label class="chip"><input type="checkbox" value="Security" /> Security</label>
+                <label class="chip"><input type="checkbox" value="Product" /> Product</label>
+                <label class="chip"><input type="checkbox" value="Marketing" /> Marketing</label>
+                <label class="chip"><input type="checkbox" value="Web Apps" /> Web Apps</label>
+              </div>
+            </div>
+
+            <div class="choice-section">
+              <h3>Topics to explore</h3>
+              <div class="chip-grid">
+                <label class="chip"><input type="checkbox" value="Generative AI" checked /> Generative AI</label>
+                <label class="chip"><input type="checkbox" value="Data Science" /> Data Science</label>
+                <label class="chip"><input type="checkbox" value="Cloud Architecture" /> Cloud Architecture</label>
+                <label class="chip"><input type="checkbox" value="Product Strategy" /> Product Strategy</label>
+                <label class="chip"><input type="checkbox" value="Cybersecurity" /> Cybersecurity</label>
+                <label class="chip"><input type="checkbox" value="Full-Stack Development" /> Full-Stack Development</label>
+              </div>
+            </div>
+
+            <button type="submit" class="primary-button" id="submit-button">Get recommendations</button>
+          </form>
+
+          <p id="error-message" class="error-message" aria-live="polite"></p>
+        </section>
+
+        <section id="career-results" class="panel results-panel glass-panel hidden">
+          <div class="results-header">
+            <div>
+              <p class="eyebrow">Recommended paths</p>
+              <h2 id="student-summary">Career matches</h2>
+            </div>
+            <span id="learning-badge" class="status-tag secondary">Intermediate</span>
+          </div>
+
+          <div id="recommendation-list" class="recommendation-list"></div>
+        </section>
+      </div>
+    </section>
+
+    <section id="courses" class="courses-showcase">
+      <div class="section-heading">
+        <p class="eyebrow">Featured courses</p>
+        <h2>Build skills with TechZone Academy</h2>
+      </div>
+
+      <div class="course-grid">
+        <a class="course-card" href="https://www.techzoneacademy.in/course/data-analytics-gen-ai" target="_blank" rel="noopener">
+          <span class="course-tag">Analytics</span>
+          <h3>Data Analytics with Gen AI</h3>
+        </a>
+        <a class="course-card" href="https://www.techzoneacademy.in/course/data-science-gen-ai" target="_blank" rel="noopener">
+          <span class="course-tag">Data Science</span>
+          <h3>Data Science with Gen AI</h3>
+        </a>
+        <a class="course-card" href="https://www.techzoneacademy.in/course/gen-ai-engineering" target="_blank" rel="noopener">
+          <span class="course-tag">AI</span>
+          <h3>Gen AI Engineering</h3>
+        </a>
+        <a class="course-card" href="https://www.techzoneacademy.in/course/aiml-engineering" target="_blank" rel="noopener">
+          <span class="course-tag">ML</span>
+          <h3>AIML Engineering</h3>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" id="contact">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <img src="https://www.techzoneacademy.in/images/techzone_logo.png" alt="TechZone Academy logo" />
+        <p>TechZone Academy helps students build career-ready skills through future-focused, practical learning in AI, data, cloud, product, and digital transformation.</p>
+      </div>
+
+      <div>
+        <h3>Quick links</h3>
+        <ul>
+          <li><a href="https://www.techzoneacademy.in/" target="_blank" rel="noopener">Official website</a></li>
+          <li><a href="https://www.techzoneacademy.in/about" target="_blank" rel="noopener">About us</a></li>
+          <li><a href="https://www.techzoneacademy.in/contact" target="_blank" rel="noopener">Contact</a></li>
+          <li><a href="https://www.techzoneacademy.in/location/lakdikapul" target="_blank" rel="noopener">Lakdikapul campus</a></li>
+          <li><a href="https://www.techzoneacademy.in/location/himayatnagar" target="_blank" rel="noopener">Himayat Nagar campus</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3>Popular courses</h3>
+        <ul>
+          <li><a href="https://www.techzoneacademy.in/course/data-analytics-gen-ai" target="_blank" rel="noopener">Data Analytics with Gen AI</a></li>
+          <li><a href="https://www.techzoneacademy.in/course/data-science-gen-ai" target="_blank" rel="noopener">Data Science with Gen AI</a></li>
+          <li><a href="https://www.techzoneacademy.in/course/gen-ai-engineering" target="_blank" rel="noopener">Gen AI Engineering</a></li>
+          <li><a href="https://www.techzoneacademy.in/course/aiml-engineering" target="_blank" rel="noopener">AIML Engineering</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3>Contact</h3>
+        <ul class="contact-list">
+          <li><a href="mailto:tzacademy.official@gmail.com">tzacademy.official@gmail.com</a></li>
+          <li><a href="tel:+916304872757">Lakdikapul: +91 63048 72757</a></li>
+          <li><a href="tel:+919182220758">Lakdikapul: +91 91822 20758</a></li>
+          <li><a href="tel:+919246876444">Himayat Nagar: +91 92468 76444</a></li>
+          <li><strong>Lakdikapul:</strong> Hyderabad</li>
+          <li><strong>Himayat Nagar:</strong> Hyderabad</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom container">
+      <span>© 2026 TechZone Academy</span>
+      <span>AI careers • Data • Cloud • Product</span>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll('input[type="range"]').forEach((slider) => {
+      const valueEl = slider.parentElement.querySelector('.slider-value');
+      const sync = () => {
+        valueEl.textContent = slider.value;
+      };
+      slider.addEventListener('input', sync);
+      sync();
+    });
+
+    const navToggle = document.querySelector('.nav-toggle');
+    const navMenu = document.getElementById('nav-menu');
+
+    if (navToggle && navMenu) {
+      navToggle.addEventListener('click', () => {
+        const isOpen = navMenu.classList.toggle('open');
+        navToggle.setAttribute('aria-expanded', String(isOpen));
+      });
+
+      navMenu.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => {
+          navMenu.classList.remove('open');
+          navToggle.setAttribute('aria-expanded', 'false');
+        });
+      });
+    }
+
+    document.getElementById('career-form').addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const submitButton = document.getElementById('submit-button');
+      const errorMessage = document.getElementById('error-message');
+      const resultsPanel = document.getElementById('career-results');
+
+      errorMessage.textContent = '';
+      submitButton.disabled = true;
+      submitButton.textContent = 'Analyzing...';
+
+      const skills = {};
+      document.querySelectorAll('input[data-skill]').forEach((input) => {
+        skills[input.dataset.skill] = Number(input.value);
+      });
+
+      const interests = Array.from(document.querySelectorAll('.chip input[type="checkbox"][value]'))
+        .filter((box) => box.checked)
+        .map((box) => box.value);
+
+      const payload = {
+        student_name: document.getElementById('student_name').value.trim() || 'Student',
+        current_learning_level: document.getElementById('learning_level').value,
+        career_goals: [document.getElementById('career_goal').value],
+        skills,
+        interests,
+        learning_topics: Array.from(document.querySelectorAll('.chip input[type="checkbox"][value]'))
+          .filter((box) => box.checked)
+          .map((box) => box.value)
+      };
+
+      try {
+        const response = await fetch('/predict', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await response.json();
+        if (!response.ok) {
+          throw new Error(data.error || 'Recommendation request failed');
+        }
+
+        renderRecommendations(data);
+        resultsPanel.classList.remove('hidden');
+        resultsPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } catch (error) {
+        errorMessage.textContent = error.message;
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = 'Get recommendations';
+      }
+    });
+
+    function renderRecommendations(data) {
+      const list = document.getElementById('recommendation-list');
+      const summary = document.getElementById('student-summary');
+      const badge = document.getElementById('learning-badge');
+
+      summary.textContent = `${data.student_name || 'Student'}: best-fit career paths`;
+      badge.textContent = data.learning_level || 'Beginner';
+
+      list.innerHTML = data.recommendations.map((career, index) => {
+        const courses = (career.recommended_courses || []).map((course) => `
+          <span class="mini-tag">${course.course_name}</span>
+        `).join('');
+
+        const why = (career.why_it_matches || []).map((item) => `<li>${item}</li>`).join('');
+        const skills = (career.skills_match || []).map((skill) => `<span class="mini-tag success">${skill}</span>`).join('');
+        const gaps = (career.missing_skills || []).map((skill) => `<span class="mini-tag muted">${skill}</span>`).join('');
+        const nextSteps = (career.next_learning_steps || []).map((step) => `<li>${step}</li>`).join('');
+
+        return `
+          <article class="recommendation-card rank-${index + 1}">
+            <div class="recommendation-header">
+              <div>
+                <p class="rank-label">#${index + 1}</p>
+                <h3>${career.career_name}</h3>
+              </div>
+              <div class="score-pill">${career.match_score}%</div>
+            </div>
+
+            <p class="career-description">${career.description}</p>
+
+            <div class="info-block">
+              <h4>Why it fits</h4>
+              <ul>${why}</ul>
+            </div>
+
+            <div class="info-block">
+              <h4>Skills that match</h4>
+              <div class="tag-row">${skills || '<span class="mini-tag muted">Explore your profile</span>'}</div>
+            </div>
+
+            <div class="info-block">
+              <h4>Skills to strengthen</h4>
+              <div class="tag-row">${gaps || '<span class="mini-tag muted">No major gaps</span>'}</div>
+            </div>
+
+            <div class="info-block">
+              <h4>Recommended TechZone courses</h4>
+              <div class="tag-row">${courses || '<span class="mini-tag muted">No direct course</span>'}</div>
+            </div>
+
+            <div class="info-block">
+              <h4>Suggested next steps</h4>
+              <ul>${nextSteps}</ul>
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+  </script>
+</body>
+</html>

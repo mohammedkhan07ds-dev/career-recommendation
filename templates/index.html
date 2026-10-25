@@ -3,178 +3,1037 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Career Recommendation System</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  <meta name="description" content="TechZone AI Career Navigator - Discover your career direction, match your skills with industry-relevant paths, and explore TechZone Academy courses through personalized, explainable recommendations." />
+  <title>TechZone AI Career Navigator | TechZone Academy</title>
+  
+  <!-- Preconnect to Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=2" />
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>Career Recommendation System</h1>
-      <p>Discover your ideal career path based on skills, aptitude, and interests</p>
-    </header>
+  <!-- Keyboard Accessibility Skip Link -->
+  <a href="#assessment-section" class="skip-link">Skip to Career Assessment</a>
 
-    <section class="card">
-      <h2>Your Profile</h2>
-      <form id="career-form">
-        <div class="form-grid">
-          <div class="field">
-            <label>Programming Skill <span class="value" id="prog-val">5</span></label>
-            <input type="range" id="programming_skill" name="programming_skill" min="1" max="10" value="5" />
-          </div>
-          <div class="field">
-            <label>Math Skill <span class="value" id="math-val">5</span></label>
-            <input type="range" id="math_skill" name="math_skill" min="1" max="10" value="5" />
-          </div>
-          <div class="field">
-            <label>Communication Skill <span class="value" id="comm-val">5</span></label>
-            <input type="range" id="communication_skill" name="communication_skill" min="1" max="10" value="5" />
-          </div>
-          <div class="field">
-            <label>Logic Score <span class="value" id="logic-val">5</span></label>
-            <input type="range" id="logic_score" name="logic_score" min="1" max="10" value="5" />
-          </div>
-          <div class="field">
-            <label>CGPA (5.0 – 10.0)</label>
-            <input type="number" id="cgpa" name="cgpa" min="5" max="10" step="0.1" value="7.5" />
-          </div>
-          <div class="field">
-            <label>Aptitude Score (40 – 100)</label>
-            <input type="number" id="aptitude_score" name="aptitude_score" min="40" max="100" value="70" />
-          </div>
-          <div class="field">
-            <label>Interest Area</label>
-            <select id="interest_area" name="interest_area">
-              <option value="AI/ML">AI/ML</option>
-              <option value="Coding">Coding</option>
-              <option value="Business">Business</option>
-              <option value="Networking">Networking</option>
-              <option value="Design">Design</option>
-              <option value="Data">Data</option>
-              <option value="Security">Security</option>
-              <option value="Management">Management</option>
-            </select>
-          </div>
-        </div>
-        <button type="submit" class="btn-primary" id="submit-btn">Get Recommendation</button>
-      </form>
-      <p class="error-msg" id="error-msg"></p>
-    </section>
-
-    <section id="results" class="card" style="display: none; margin-top: 1.5rem;">
-      <h2>Top Career Matches</h2>
-      <div class="career-cards" id="career-cards"></div>
-    </section>
-
-    <section id="details" class="card" style="display: none;">
-      <h2 id="details-title">About Your Top Match</h2>
-      <p class="description" id="career-description"></p>
-      <h2 style="margin-top: 1.25rem; font-size: 1rem;">Required Skills</h2>
-      <div class="skill-tags" id="required-skills"></div>
-    </section>
-
-    <section id="gaps" class="card" style="display: none;">
-      <h2>Skill Gap Analysis</h2>
-      <ul class="gap-list" id="gap-list"></ul>
-    </section>
+  <!-- Ambient Scene & Cybernetic Grid -->
+  <div class="ambient-scene" aria-hidden="true">
+    <div class="ambient-glow-1"></div>
+    <div class="ambient-glow-2"></div>
+    <div class="ambient-glow-3"></div>
+    <div class="cyber-grid"></div>
   </div>
 
-  <script>
-    const sliders = [
-      { id: "programming_skill", label: "prog-val" },
-      { id: "math_skill", label: "math-val" },
-      { id: "communication_skill", label: "comm-val" },
-      { id: "logic_score", label: "logic-val" },
-    ];
+  <!-- Header Navigation -->
+  <header class="site-header" id="site-header">
+    <div class="container header-container">
+      <a href="#hero" class="brand-link" aria-label="TechZone Academy Career Navigator Home">
+        <img src="https://www.techzoneacademy.in/images/techzone_logo.png" alt="TechZone Academy Logo" class="brand-logo" />
+        <span class="brand-text">TechZone Academy</span>
+      </a>
 
-    sliders.forEach(({ id, label }) => {
-      const el = document.getElementById(id);
-      const valEl = document.getElementById(label);
-      el.addEventListener("input", () => {
-        valEl.textContent = el.value;
-      });
-    });
+      <!-- Desktop Nav Links -->
+      <nav class="nav-links" aria-label="Main Navigation">
+        <a href="#hero" class="nav-link active">Career Navigator</a>
+        <a href="https://www.techzoneacademy.in/" class="nav-link" target="_blank" rel="noopener">Home</a>
+        <a href="#courses-showcase" class="nav-link">Courses</a>
+        <a href="https://www.techzoneacademy.in/events" class="nav-link" target="_blank" rel="noopener">Events</a>
+        <a href="https://www.techzoneacademy.in/location/lakdikapul" class="nav-link" target="_blank" rel="noopener">Locations</a>
+        <a href="https://www.techzoneacademy.in/blog" class="nav-link" target="_blank" rel="noopener">Blogs</a>
+        <a href="https://www.techzoneacademy.in/about" class="nav-link" target="_blank" rel="noopener">About</a>
+        <a href="https://www.techzoneacademy.in/contact" class="nav-link" target="_blank" rel="noopener">Contact</a>
+      </nav>
 
-    document.getElementById("career-form").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const btn = document.getElementById("submit-btn");
-      const errorEl = document.getElementById("error-msg");
-      errorEl.classList.remove("visible");
-      btn.disabled = true;
-      btn.textContent = "Analyzing...";
+      <!-- Header Actions -->
+      <div class="header-actions">
+        <a href="#courses-showcase" class="btn-header-cta" id="header-courses-cta">
+          Explore Courses
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
 
-      const payload = {
-        programming_skill: parseInt(document.getElementById("programming_skill").value),
-        math_skill: parseInt(document.getElementById("math_skill").value),
-        communication_skill: parseInt(document.getElementById("communication_skill").value),
-        logic_score: parseInt(document.getElementById("logic_score").value),
-        cgpa: parseFloat(document.getElementById("cgpa").value),
-        aptitude_score: parseInt(document.getElementById("aptitude_score").value),
-        interest_area: document.getElementById("interest_area").value,
-      };
+        <!-- Mobile Menu Toggle Button -->
+        <button type="button" class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="mobile-drawer" aria-label="Toggle navigation menu">
+          <span class="hamburger-line"></span>
+        </button>
+      </div>
+    </div>
+  </header>
 
-      try {
-        const res = await fetch("/predict", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.error || "Prediction failed");
+  <!-- Mobile Drawer Backdrop & Menu -->
+  <div class="mobile-nav-backdrop" id="mobile-backdrop" aria-hidden="true"></div>
+  <aside class="mobile-drawer" id="mobile-drawer" aria-label="Mobile Navigation Drawer">
+    <a href="#hero" class="mobile-nav-link active">Career Navigator</a>
+    <a href="https://www.techzoneacademy.in/" class="mobile-nav-link" target="_blank" rel="noopener">Home</a>
+    <a href="#courses-showcase" class="mobile-nav-link">Courses</a>
+    <a href="https://www.techzoneacademy.in/events" class="mobile-nav-link" target="_blank" rel="noopener">Events</a>
+    <a href="https://www.techzoneacademy.in/location/lakdikapul" class="mobile-nav-link" target="_blank" rel="noopener">Locations</a>
+    <a href="https://www.techzoneacademy.in/blog" class="mobile-nav-link" target="_blank" rel="noopener">Blogs</a>
+    <a href="https://www.techzoneacademy.in/about" class="mobile-nav-link" target="_blank" rel="noopener">About</a>
+    <a href="https://www.techzoneacademy.in/contact" class="mobile-nav-link" target="_blank" rel="noopener">Contact</a>
+    <div style="margin-top: 1rem;">
+      <a href="#assessment-section" class="btn-primary" style="width: 100%; text-align: center;">Start Career Assessment</a>
+    </div>
+  </aside>
 
-        renderResults(data);
-      } catch (err) {
-        errorEl.textContent = err.message;
-        errorEl.classList.add("visible");
-      } finally {
-        btn.disabled = false;
-        btn.textContent = "Get Recommendation";
-      }
-    });
-
-    function renderResults(data) {
-      const cardsEl = document.getElementById("career-cards");
-      cardsEl.innerHTML = "";
-
-      data.top_recommendations.forEach((rec) => {
-        const card = document.createElement("div");
-        card.className = `career-card rank-${rec.rank}`;
-        card.innerHTML = `
-          <span class="rank-badge">#${rec.rank}</span>
-          <h3>${rec.career}</h3>
-          <div class="progress-bar">
-            <div class="progress-fill" style="width: 0%"></div>
+  <main id="main-content">
+    <!-- HERO SECTION -->
+    <section class="hero-section" id="hero" aria-labelledby="hero-title">
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <div class="eyebrow-badge">
+            <span class="pulsing-dot" aria-hidden="true"></span>
+            YOUR SKILLS. YOUR INTERESTS. YOUR FUTURE.
           </div>
-          <p class="confidence-text">${rec.confidence}% confidence</p>
-        `;
-        cardsEl.appendChild(card);
-        requestAnimationFrame(() => {
-          card.querySelector(".progress-fill").style.width = rec.confidence + "%";
-        });
-      });
 
-      const results = document.getElementById("results");
-      results.style.display = "block";
-      results.classList.remove("visible");
-      void results.offsetWidth;
-      results.classList.add("visible");
+          <h1 class="hero-title" id="hero-title">
+            TechZone <span class="gradient-title-accent">AI Career</span> Navigator
+          </h1>
 
-      const top = data.top_career;
-      document.getElementById("details-title").textContent = `About ${top.name}`;
-      document.getElementById("career-description").textContent = top.description;
+          <p class="hero-description">
+            Discover your career direction, match your skills with industry-relevant paths, and explore TechZone Academy courses through personalized, explainable recommendations.
+          </p>
 
-      const skillsEl = document.getElementById("required-skills");
-      skillsEl.innerHTML = top.required_skills
-        .map((s) => `<span class="tag">${s}</span>`)
-        .join("");
+          <div class="hero-actions">
+            <a href="#assessment-section" class="btn-primary" id="hero-start-cta">
+              Start Career Assessment
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+            <a href="#courses-showcase" class="btn-secondary" id="hero-explore-cta">
+              Explore Courses
+            </a>
+          </div>
 
-      const gapEl = document.getElementById("gap-list");
-      gapEl.innerHTML = data.skill_gap_analysis
-        .map((g) => `<li>${g}</li>`)
-        .join("");
+          <!-- 4 Feature Indicators -->
+          <div class="feature-indicators" role="list" aria-label="Platform Highlights">
+            <div class="indicator-item" role="listitem">
+              <div class="indicator-icon-wrap" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              </div>
+              <span class="indicator-text">Career Recommendations</span>
+            </div>
 
-      document.getElementById("details").style.display = "block";
-      document.getElementById("gaps").style.display = "block";
-    }
-  </script>
+            <div class="indicator-item" role="listitem">
+              <div class="indicator-icon-wrap" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              </div>
+              <span class="indicator-text">Course Matching</span>
+            </div>
+
+            <div class="indicator-item" role="listitem">
+              <div class="indicator-icon-wrap" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              </div>
+              <span class="indicator-text">Skill-Gap Analysis</span>
+            </div>
+
+            <div class="indicator-item" role="listitem">
+              <div class="indicator-icon-wrap" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>
+              </div>
+              <span class="indicator-text">Learning Roadmaps</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- AI Career Pathway Synthesis Visualization -->
+        <div class="hero-visual" aria-hidden="true">
+          <div class="hero-visual-card glow-card">
+            <div class="visual-header-badge">
+              <span class="pulse-spark"></span>
+              <span class="vbadge-text">AI SKILL-TO-CAREER SYNTHESIS PIPELINE</span>
+            </div>
+
+            <svg class="neural-network-svg" viewBox="0 0 540 370" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="grad-cyan-blue" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#00E5FF" stop-opacity="0.9" />
+                  <stop offset="100%" stop-color="#3987FF" stop-opacity="0.4" />
+                </linearGradient>
+                <linearGradient id="grad-purple-cyan" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#9747FF" stop-opacity="0.8" />
+                  <stop offset="100%" stop-color="#00E5FF" stop-opacity="0.5" />
+                </linearGradient>
+                <linearGradient id="grad-blue-purple" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#3987FF" stop-opacity="0.8" />
+                  <stop offset="100%" stop-color="#9747FF" stop-opacity="0.4" />
+                </linearGradient>
+                <radialGradient id="core-glow" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#00E5FF" stop-opacity="0.5" />
+                  <stop offset="50%" stop-color="#3987FF" stop-opacity="0.2" />
+                  <stop offset="100%" stop-color="#0D1730" stop-opacity="0" />
+                </radialGradient>
+                <filter id="glow-filter" x="-20%" y="-20%" width="140%" height="140%">
+                  <feGaussianBlur stdDeviation="4" result="blur" />
+                  <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                </filter>
+              </defs>
+
+              <!-- Ambient Glow Field behind Core -->
+              <circle cx="270" cy="185" r="90" fill="url(#core-glow)" />
+
+              <!-- Floating Background Particles -->
+              <g class="ambient-particles">
+                <circle cx="160" cy="95" r="2" fill="#00E5FF" opacity="0.6" class="particle-drift-1" />
+                <circle cx="210" cy="270" r="2.5" fill="#9747FF" opacity="0.5" class="particle-drift-2" />
+                <circle cx="330" cy="110" r="2" fill="#3987FF" opacity="0.6" class="particle-drift-3" />
+                <circle cx="380" cy="285" r="3" fill="#00E5FF" opacity="0.4" class="particle-drift-1" />
+                <circle cx="280" cy="50" r="1.5" fill="#FFFFFF" opacity="0.7" class="particle-drift-2" />
+              </g>
+
+              <!-- Synaptic Curved Data Highways (Left to Center) -->
+              <g class="data-pathways" stroke-width="1.8">
+                <!-- Skill 1 to Core -->
+                <path d="M 130 75 C 195 75, 205 185, 270 185" stroke="rgba(70, 145, 255, 0.22)" fill="none" />
+                <path d="M 130 75 C 195 75, 205 185, 270 185" stroke="url(#grad-cyan-blue)" fill="none" class="stream-line stream-fast" />
+
+                <!-- Skill 2 to Core -->
+                <path d="M 130 145 C 190 145, 215 185, 270 185" stroke="rgba(151, 71, 255, 0.22)" fill="none" />
+                <path d="M 130 145 C 190 145, 215 185, 270 185" stroke="url(#grad-purple-cyan)" fill="none" class="stream-line stream-medium" />
+
+                <!-- Skill 3 to Core -->
+                <path d="M 130 225 C 190 225, 215 185, 270 185" stroke="rgba(57, 135, 255, 0.22)" fill="none" />
+                <path d="M 130 225 C 190 225, 215 185, 270 185" stroke="url(#grad-blue-purple)" fill="none" class="stream-line stream-fast" />
+
+                <!-- Skill 4 to Core -->
+                <path d="M 130 295 C 195 295, 205 185, 270 185" stroke="rgba(0, 229, 255, 0.22)" fill="none" />
+                <path d="M 130 295 C 195 295, 205 185, 270 185" stroke="url(#grad-cyan-blue)" fill="none" class="stream-line stream-slow" />
+
+                <!-- Core to Career 1 -->
+                <path d="M 270 185 C 335 185, 345 75, 410 75" stroke="rgba(0, 229, 255, 0.22)" fill="none" />
+                <path d="M 270 185 C 335 185, 345 75, 410 75" stroke="url(#grad-cyan-blue)" fill="none" class="stream-line stream-fast" />
+
+                <!-- Core to Career 2 -->
+                <path d="M 270 185 C 325 185, 350 145, 410 145" stroke="rgba(57, 135, 255, 0.22)" fill="none" />
+                <path d="M 270 185 C 325 185, 350 145, 410 145" stroke="url(#grad-blue-purple)" fill="none" class="stream-line stream-medium" />
+
+                <!-- Core to Career 3 -->
+                <path d="M 270 185 C 325 185, 350 225, 410 225" stroke="rgba(151, 71, 255, 0.22)" fill="none" />
+                <path d="M 270 185 C 325 185, 350 225, 410 225" stroke="url(#grad-purple-cyan)" fill="none" class="stream-line stream-fast" />
+
+                <!-- Core to Career 4 -->
+                <path d="M 270 185 C 335 185, 345 295, 410 295" stroke="rgba(0, 229, 255, 0.22)" fill="none" />
+                <path d="M 270 185 C 335 185, 345 295, 410 295" stroke="url(#grad-cyan-blue)" fill="none" class="stream-line stream-slow" />
+              </g>
+
+              <!-- Central AI Neural Processing Hub -->
+              <g class="neural-core-group" transform="translate(270, 185)">
+                <!-- Rotating Radar Ring -->
+                <circle cx="0" cy="0" r="46" stroke="rgba(0, 229, 255, 0.35)" stroke-dasharray="6 6" fill="none" class="orbit-radar-ring" />
+                <circle cx="0" cy="0" r="34" stroke="rgba(151, 71, 255, 0.3)" stroke-width="1.5" fill="none" />
+                
+                <!-- Core Glow Circle -->
+                <circle cx="0" cy="0" r="24" fill="#0D1730" stroke="var(--cyan)" stroke-width="2" filter="url(#glow-filter)" />
+                <circle cx="0" cy="0" r="14" fill="url(#grad-cyan-blue)" class="core-pulse-node" />
+                <circle cx="0" cy="0" r="5" fill="#FFFFFF" />
+
+                <!-- Engine Labels -->
+                <text x="0" y="62" text-anchor="middle" fill="var(--cyan)" font-size="9" font-weight="800" letter-spacing="1">TECHZONE ENGINE</text>
+                <text x="0" y="74" text-anchor="middle" fill="var(--muted)" font-size="7.5" font-weight="600">Explainable Matcher</text>
+              </g>
+
+              <!-- LEFT NODES: Skills Input Vectors -->
+              <!-- Skill 1: Python & SQL -->
+              <g class="skill-svg-node" transform="translate(20, 56)">
+                <rect width="110" height="38" rx="8" fill="rgba(13, 23, 48, 0.85)" stroke="rgba(0, 229, 255, 0.4)" stroke-width="1.2" />
+                <circle cx="16" cy="19" r="6" fill="rgba(0, 229, 255, 0.2)" stroke="#00E5FF" stroke-width="1.5" />
+                <text x="30" y="18" fill="#FFFFFF" font-size="10.5" font-weight="700">Python &amp; SQL</text>
+                <text x="30" y="29" fill="var(--muted)" font-size="7.5">Skill Rating: 4/5</text>
+                <!-- Terminal socket -->
+                <circle cx="110" cy="19" r="4.5" fill="#00E5FF" filter="drop-shadow(0 0 5px #00E5FF)" />
+              </g>
+
+              <!-- Skill 2: Generative AI -->
+              <g class="skill-svg-node" transform="translate(20, 126)">
+                <rect width="110" height="38" rx="8" fill="rgba(13, 23, 48, 0.85)" stroke="rgba(151, 71, 255, 0.45)" stroke-width="1.2" />
+                <circle cx="16" cy="19" r="6" fill="rgba(151, 71, 255, 0.25)" stroke="#9747FF" stroke-width="1.5" />
+                <text x="30" y="18" fill="#FFFFFF" font-size="10.5" font-weight="700">Generative AI</text>
+                <text x="30" y="29" fill="var(--muted)" font-size="7.5">LLM &amp; Prompting</text>
+                <!-- Terminal socket -->
+                <circle cx="110" cy="19" r="4.5" fill="#9747FF" filter="drop-shadow(0 0 5px #9747FF)" />
+              </g>
+
+              <!-- Skill 3: Machine Learning -->
+              <g class="skill-svg-node" transform="translate(20, 206)">
+                <rect width="110" height="38" rx="8" fill="rgba(13, 23, 48, 0.85)" stroke="rgba(57, 135, 255, 0.4)" stroke-width="1.2" />
+                <circle cx="16" cy="19" r="6" fill="rgba(57, 135, 255, 0.2)" stroke="#3987FF" stroke-width="1.5" />
+                <text x="30" y="18" fill="#FFFFFF" font-size="10.5" font-weight="700">Machine Learning</text>
+                <text x="30" y="29" fill="var(--muted)" font-size="7.5">Models &amp; Stats</text>
+                <!-- Terminal socket -->
+                <circle cx="110" cy="19" r="4.5" fill="#3987FF" filter="drop-shadow(0 0 5px #3987FF)" />
+              </g>
+
+              <!-- Skill 4: Cloud & DevOps -->
+              <g class="skill-svg-node" transform="translate(20, 276)">
+                <rect width="110" height="38" rx="8" fill="rgba(13, 23, 48, 0.85)" stroke="rgba(0, 229, 255, 0.35)" stroke-width="1.2" />
+                <circle cx="16" cy="19" r="6" fill="rgba(0, 229, 255, 0.2)" stroke="#00E5FF" stroke-width="1.5" />
+                <text x="30" y="18" fill="#FFFFFF" font-size="10.5" font-weight="700">Cloud &amp; DevOps</text>
+                <text x="30" y="29" fill="var(--muted)" font-size="7.5">AWS &amp; Pipelines</text>
+                <!-- Terminal socket -->
+                <circle cx="110" cy="19" r="4.5" fill="#00E5FF" filter="drop-shadow(0 0 5px #00E5FF)" />
+              </g>
+
+              <!-- RIGHT NODES: Target Career Roles & Matched Courses -->
+              <!-- Career 1: AI Engineer -->
+              <g class="career-svg-node" transform="translate(410, 56)">
+                <!-- Input socket -->
+                <circle cx="0" cy="19" r="4.5" fill="#00E5FF" filter="drop-shadow(0 0 5px #00E5FF)" />
+                <rect x="0" y="0" width="112" height="38" rx="8" fill="rgba(13, 23, 48, 0.9)" stroke="rgba(0, 229, 255, 0.55)" stroke-width="1.2" />
+                <text x="12" y="18" fill="#FFFFFF" font-size="10.5" font-weight="800">AI Engineer</text>
+                <rect x="74" y="6" width="30" height="15" rx="4" fill="rgba(0, 229, 255, 0.2)" />
+                <text x="89" y="17" fill="#00E5FF" font-size="8.5" font-weight="800" text-anchor="middle">95%</text>
+                <text x="12" y="30" fill="var(--cyan)" font-size="7.5">COURSE-04 &bull; Gen AI</text>
+              </g>
+
+              <!-- Career 2: Data Scientist -->
+              <g class="career-svg-node" transform="translate(410, 126)">
+                <circle cx="0" cy="19" r="4.5" fill="#3987FF" filter="drop-shadow(0 0 5px #3987FF)" />
+                <rect x="0" y="0" width="112" height="38" rx="8" fill="rgba(13, 23, 48, 0.9)" stroke="rgba(57, 135, 255, 0.5)" stroke-width="1.2" />
+                <text x="12" y="18" fill="#FFFFFF" font-size="10.5" font-weight="800">Data Scientist</text>
+                <rect x="74" y="6" width="30" height="15" rx="4" fill="rgba(57, 135, 255, 0.2)" />
+                <text x="89" y="17" fill="#3987FF" font-size="8.5" font-weight="800" text-anchor="middle">92%</text>
+                <text x="12" y="30" fill="var(--cyan)" font-size="7.5">COURSE-02 &bull; DS &amp; AI</text>
+              </g>
+
+              <!-- Career 3: Gen AI Architect -->
+              <g class="career-svg-node" transform="translate(410, 206)">
+                <circle cx="0" cy="19" r="4.5" fill="#9747FF" filter="drop-shadow(0 0 5px #9747FF)" />
+                <rect x="0" y="0" width="112" height="38" rx="8" fill="rgba(13, 23, 48, 0.9)" stroke="rgba(151, 71, 255, 0.5)" stroke-width="1.2" />
+                <text x="12" y="18" fill="#FFFFFF" font-size="10.5" font-weight="800">Gen AI Dev</text>
+                <rect x="74" y="6" width="30" height="15" rx="4" fill="rgba(151, 71, 255, 0.2)" />
+                <text x="89" y="17" fill="#C084FC" font-size="8.5" font-weight="800" text-anchor="middle">89%</text>
+                <text x="12" y="30" fill="var(--cyan)" font-size="7.5">COURSE-03 &bull; AIML</text>
+              </g>
+
+              <!-- Career 4: Cloud Architect -->
+              <g class="career-svg-node" transform="translate(410, 276)">
+                <circle cx="0" cy="19" r="4.5" fill="#00E5FF" filter="drop-shadow(0 0 5px #00E5FF)" />
+                <rect x="0" y="0" width="112" height="38" rx="8" fill="rgba(13, 23, 48, 0.9)" stroke="rgba(0, 229, 255, 0.45)" stroke-width="1.2" />
+                <text x="12" y="18" fill="#FFFFFF" font-size="10.5" font-weight="800">Cloud &amp; DevOps</text>
+                <rect x="74" y="6" width="30" height="15" rx="4" fill="rgba(0, 229, 255, 0.2)" />
+                <text x="89" y="17" fill="#00E5FF" font-size="8.5" font-weight="800" text-anchor="middle">87%</text>
+                <text x="12" y="30" fill="var(--cyan)" font-size="7.5">COURSE-08 &bull; AWS</text>
+              </g>
+            </svg>
+
+            <div class="hero-stats-banner">
+              <div class="stat-item">
+                <span class="stat-num">15</span>
+                <span class="stat-label">AI & Tech Paths</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-num">13</span>
+                <span class="stat-label">Verified Courses</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-num">100%</span>
+                <span class="stat-label">Explainable Fit</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ASSESSMENT SECTION (GUIDED STEPPER WIZARD) -->
+    <section class="assessment-section" id="assessment-section" aria-labelledby="assessment-heading">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-eyebrow">Personalized AI Evaluation</span>
+          <h2 class="section-title" id="assessment-heading">Discover Your AI Career Trajectory</h2>
+          <p class="section-subtitle">
+            Complete the 4-step profile evaluation. Our recommendation engine scores compatibility across technical competencies, interest tags, and career goals.
+          </p>
+          <div class="stepper-indicator-wrap">
+            <span class="stepper-step-indicator" id="stepper-step-indicator">Step 1 of 4: Profile &amp; Career Aspiration</span>
+          </div>
+        </div>
+
+        <!-- Stepper Navigation Header -->
+        <nav class="stepper-nav" aria-label="Assessment Steps" role="tablist">
+          <div class="stepper-track-bg" aria-hidden="true"></div>
+          <div class="stepper-track-fill" id="stepper-fill" aria-hidden="true"></div>
+
+          <button type="button" class="step-node active" data-step="1" role="tab" id="step-tab-1" aria-controls="step-pane-1" aria-selected="true">
+            <span class="step-circle">1</span>
+            <span class="step-label">Profile &amp; Goals</span>
+          </button>
+
+          <button type="button" class="step-node" data-step="2" role="tab" id="step-tab-2" aria-controls="step-pane-2" aria-selected="false">
+            <span class="step-circle">2</span>
+            <span class="step-label">Skills Matrix</span>
+          </button>
+
+          <button type="button" class="step-node" data-step="3" role="tab" id="step-tab-3" aria-controls="step-pane-3" aria-selected="false">
+            <span class="step-circle">3</span>
+            <span class="step-label">Interests &amp; Topics</span>
+          </button>
+
+          <button type="button" class="step-node" data-step="4" role="tab" id="step-tab-4" aria-controls="step-pane-4" aria-selected="false">
+            <span class="step-circle">4</span>
+            <span class="step-label">Review &amp; Submit</span>
+          </button>
+        </nav>
+
+        <!-- Form Container Card -->
+        <div class="assessment-card glow-card">
+          <form id="career-form" novalidate>
+            <!-- STEP 1: Profile & Goals -->
+            <div class="form-step active" data-step="1" id="step-pane-1" role="tabpanel" aria-labelledby="step-tab-1">
+              <div class="step-header">
+                <h3 class="step-title">Step 1: Student Profile & Career Aspiration</h3>
+                <p class="step-desc">Tell us your background and the primary industry domain you aim to conquer.</p>
+              </div>
+
+              <div class="form-row-grid">
+                <div class="form-field">
+                  <label for="student_name" class="field-label">
+                    <span>Your Name</span>
+                    <span class="field-hint">Optional</span>
+                  </label>
+                  <input type="text" id="student_name" name="student_name" class="custom-input" placeholder="e.g. Aisha Sharma" />
+                </div>
+
+                <div class="form-field">
+                  <label class="field-label">
+                    <span>Current Learning Level</span>
+                    <span class="field-hint">Select proficiency</span>
+                  </label>
+                  <div class="level-segmented-group" role="radiogroup" aria-label="Learning Level">
+                    <label class="level-radio-label">
+                      <input type="radio" name="learning_level" value="Beginner" class="level-radio-input" />
+                      <span>Beginner</span>
+                    </label>
+                    <label class="level-radio-label">
+                      <input type="radio" name="learning_level" value="Intermediate" class="level-radio-input" checked />
+                      <span>Intermediate</span>
+                    </label>
+                    <label class="level-radio-label">
+                      <input type="radio" name="learning_level" value="Advanced" class="level-radio-input" />
+                      <span>Advanced</span>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="form-field full-width">
+                  <label for="career_goal" class="field-label">
+                    <span>Target Career Goal</span>
+                    <span class="field-hint">Primary direction</span>
+                  </label>
+                  <select id="career_goal" name="career_goal" class="custom-select">
+                    <option value="AI & ML" selected>AI & ML — Intelligent algorithms, generative systems, and predictive models</option>
+                    <option value="Data & Analytics">Data & Analytics — Business intelligence, analytics workflows, and data pipelines</option>
+                    <option value="Cloud & DevOps">Cloud & DevOps — Cloud architecture, reliability, and automated CI/CD systems</option>
+                    <option value="Product & Strategy">Product & Strategy — AI product management, growth, and roadmap execution</option>
+                    <option value="Cybersecurity">Cybersecurity — Threat defense, network security, and AI-assisted protection</option>
+                    <option value="Web & Full-Stack">Web & Full-Stack — Modern web applications, API engineering, and frontend systems</option>
+                    <option value="Marketing & Growth">Marketing & Growth — Digital marketing, AI analytics, and funnel optimization</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- STEP 2: Skills Matrix -->
+            <div class="form-step" data-step="2" id="step-pane-2" role="tabpanel" aria-labelledby="step-tab-2">
+              <div class="step-header">
+                <h3 class="step-title">Step 2: Technical & Core Competency Ratings</h3>
+                <p class="step-desc">Rate your proficiency from 0 (Unset) to 5 (Expert). Ratings &ge; 3.0 count as strengths in role matching.</p>
+              </div>
+
+              <!-- Quick Presets -->
+              <div class="skill-presets-row">
+                <span class="preset-title">Quick Presets:</span>
+                <button type="button" class="preset-btn" data-preset="ai">AI & ML Focus</button>
+                <button type="button" class="preset-btn" data-preset="data">Data Analyst Focus</button>
+                <button type="button" class="preset-btn" data-preset="fullstack">Full-Stack & Cloud Focus</button>
+                <button type="button" class="preset-btn" data-preset="reset">Clear All</button>
+              </div>
+
+              <!-- Filter Tabs -->
+              <div class="skills-filter-tabs" role="tablist" aria-label="Skill Filter Categories">
+                <button type="button" class="filter-tab-btn active" data-skill-cat="all">All Skills (16)</button>
+                <button type="button" class="filter-tab-btn" data-skill-cat="ai-data">AI & Data</button>
+                <button type="button" class="filter-tab-btn" data-skill-cat="dev-cloud">Dev & Cloud</button>
+                <button type="button" class="filter-tab-btn" data-skill-cat="core">Strategy & Core</button>
+              </div>
+
+              <!-- Sliders Grid (All 16 recognized backend skills) -->
+              <div class="sliders-grid">
+                <!-- Python -->
+                <div class="slider-card" data-skill-cat="ai-data">
+                  <div class="slider-header">
+                    <span class="slider-title">Python</span>
+                    <div class="slider-badge-wrap">
+                      <span class="slider-level-text">Competent</span>
+                      <span class="slider-num-badge">3</span>
+                    </div>
+                  </div>
+                  <input type="range" min="0" max="5" value="3" class="range-input" data-skill="Python" aria-label="Python proficiency" />
+                </div>
+
+                <!-- SQL -->
+                <div class="slider-card" data-skill-cat="ai-data">
+                  <div class="slider-header">
+                    <span class="slider-title">SQL</span>
+                    <div class="slider-badge-wrap">
+                      <span class="slider-level-text">Familiar</span>
+                      <span class="slider-num-badge">2</span>
+                    </div>
+                  </div>
+                  <input type="range" min="0" max="5" value="2" class="range-input" data-skill="SQL" aria-label="SQL proficiency" />
+                </div>
+
+                <!-- Data Analysis -->
+                <div class="slider-card" data-skill-cat="ai-data">
+                  <div class="slider-header">
+                    <span class="slider-title">Data Analysis</span>
+                    <div class="slider-badge-wrap">
+                      <span class="slider-level-text">Competent</span>
+                      <span class="slider-num-badge">3</span>
+                    </div>
+                  </div>
+                  <input type="range" min="0" max="5" value="3" class="range-input" data-skill="Data Analysis" aria-label="Data Analysis proficiency" />
+                </div>
+
+                <!-- Machine Learning -->
+                <div class="slider-card" data-skill-cat="ai-data">
+                  <div class="slider-header">
+                    <span class="slider-title">Machine Learning</span>
+                    <div class="slider-badge-wrap">
+                      <span class="slider-level-text">Familiar</span>
+                      <span class="slider-num-badge">2</span>
+                    </div>
+                  </div>
+                  <input type="range" min="0" max="5" value="2" class="range-input" data-skill="Machine Learning" aria-label="Machine Learning proficiency" />
+                </div>
+
+                <!-- Deep Learning -->
+                <div class="slider-card" data-skill-cat="ai-data">
+                  <div class="slider-header">
+                    <span class="slider-title">Deep Learning</span>
+                    <div class="slider-badge-wrap">
+                      <span class="slider-level-text">Novice</span>
+                      <span class="slider-num-badge">1</span>
+                    </div>
+                  </div>
+                  <input type="range" min="0" max="5" value="1" class="range-input" data-skill="Deep Learning" aria-label="Deep Learning proficiency" />
+                </div>
+
+                <!-- Generative AI -->
+                <div class="slider-card" data-skill-cat="ai-data">
+                  <div class="slider-header">
+                    <span class="slider-title">Generative AI</span>
+                    <div class="slider-badge-wrap">
+                      <span class="slider-level-text">Familiar</span>
+                      <span class="slider-num-badge">2</span>
+                    </div>
+                  </div>
+                  <input type="range" min="0" max="5" value="2" class="range-input" data-skill="Generative AI" aria-label="Generative AI proficiency" />
+                </div>
+
+                <!-- Data Engineering -->
+                <div class="slider-card" data-skill-cat="ai-data">
+                  <div class="slider-header">
+                    <span class="slider-title">Data Engineering</span>
+                    <div class="slider-badge-wrap">
+                      <span class="slider-level-text">Familiar</span>
+                      <span class="slider-num-badge">2</span>
+                    </div>
+                  </div>
+                  <input type="range" min="0" max="5" value="2" class="range-input" data-skill="Data Engineering" aria-label="Data Engineering proficiency" />
+                </div>
+
+                <!-- Cloud Platforms -->
+                <div class="slider-card" data-skill-cat="dev-cloud">
+                  <div class="slider-header">
+                    <span class="slider-title">Cloud Platforms</span>
+                    <div class="slider-badge-wrap">
+                      <span class="slider-level-text">Familiar</span>
+                      <span class="slider-num-badge">2</span>
+                    </div>
+                  </div>
+                  <input type="range" min="0" max="5" value="2" class="range-input" data-skill="Cloud Platforms" aria-label="Cloud Platforms proficiency" />
+                </div>
+
+                <!-- DevOps -->
+                <div class="slider-card" data-skill-cat="dev-cloud">
+                  <div class="slider-header">
+                    <span class="slider-title">DevOps</span>
+                    <div class="slider-badge-wrap">
+                      <span class="slider-level-text">Novice</span>
+                      <span class="slider-num-badge">1</span>
+                    </div>
+                  </div>
+                  <input type="range" min="0" max="5" value="1" class="range-input" data-skill="DevOps" aria-label="DevOps proficiency" />
+                </div>
+
+                <!-- Cybersecurity -->
+                <div class="slider-card" data-skill-cat="dev-cloud">
+                  <div class="slider-header">
+                    <span class="slider-title">Cybersecurity</span>
+                    <div class="slider-badge-wrap">
+                      <span class="slider-level-text">Novice</span>
+                      <span class="slider-num-badge">1</span>
+                    </div>
+                  </div>
+                  <input type="range" min="0" max="5" value="1" class="range-input" data-skill="Cybersecurity" aria-label="Cybersecurity proficiency" />
+                </div>
+
+                <!-- Full-Stack Development -->
+                <div class="slider-card" data-skill-cat="dev-cloud">
+                  <div class="slider-header">
+                    <span class="slider-title">Full-Stack Development</span>
+                    <div class="slider-badge-wrap">
+                      <span class="slider-level-text">Familiar</span>
+                      <span class="slider-num-badge">2</span>
+                    </div>
+                  </div>
+                  <input type="range" min="0" max="5" value="2" class="range-input" data-skill="Full-Stack Development" aria-label="Full-Stack Development proficiency" />
+                </div>
+
+                <!-- Product Management -->
+                <div class="slider-card" data-skill-cat="core">
+                  <div class="slider-header">
+                    <span class="slider-title">Product Management</span>
+                    <div class="slider-badge-wrap">
+                      <span class="slider-level-text">Competent</span>
+                      <span class="slider-num-badge">3</span>
+                    </div>
+                  </div>
+                  <input type="range" min="0" max="5" value="3" class="range-input" data-skill="Product Management" aria-label="Product Management proficiency" />
+                </div>
+
+                <!-- Digital Marketing -->
+                <div class="slider-card" data-skill-cat="core">
+                  <div class="slider-header">
+                    <span class="slider-title">Digital Marketing</span>
+                    <div class="slider-badge-wrap">
+                      <span class="slider-level-text">Novice</span>
+                      <span class="slider-num-badge">1</span>
+                    </div>
+                  </div>
+                  <input type="range" min="0" max="5" value="1" class="range-input" data-skill="Digital Marketing" aria-label="Digital Marketing proficiency" />
+                </div>
+
+                <!-- Communication -->
+                <div class="slider-card" data-skill-cat="core">
+                  <div class="slider-header">
+                    <span class="slider-title">Communication</span>
+                    <div class="slider-badge-wrap">
+                      <span class="slider-level-text">Advanced</span>
+                      <span class="slider-num-badge">4</span>
+                    </div>
+                  </div>
+                  <input type="range" min="0" max="5" value="4" class="range-input" data-skill="Communication" aria-label="Communication proficiency" />
+                </div>
+
+                <!-- Problem Solving -->
+                <div class="slider-card" data-skill-cat="core">
+                  <div class="slider-header">
+                    <span class="slider-title">Problem Solving</span>
+                    <div class="slider-badge-wrap">
+                      <span class="slider-level-text">Advanced</span>
+                      <span class="slider-num-badge">4</span>
+                    </div>
+                  </div>
+                  <input type="range" min="0" max="5" value="4" class="range-input" data-skill="Problem Solving" aria-label="Problem Solving proficiency" />
+                </div>
+
+                <!-- Business Analysis -->
+                <div class="slider-card" data-skill-cat="core">
+                  <div class="slider-header">
+                    <span class="slider-title">Business Analysis</span>
+                    <div class="slider-badge-wrap">
+                      <span class="slider-level-text">Familiar</span>
+                      <span class="slider-num-badge">2</span>
+                    </div>
+                  </div>
+                  <input type="range" min="0" max="5" value="2" class="range-input" data-skill="Business Analysis" aria-label="Business Analysis proficiency" />
+                </div>
+              </div>
+            </div>
+
+            <!-- STEP 3: Interests & Topics -->
+            <div class="form-step" data-step="3" id="step-pane-3" role="tabpanel" aria-labelledby="step-tab-3">
+              <div class="step-header">
+                <h3 class="step-title">Step 3: Industry Interests & Learning Topics</h3>
+                <p class="step-desc">Select the technology sectors that inspire you most. These contribute 15% to your match calculation.</p>
+              </div>
+
+              <!-- Interest Tags -->
+              <div class="chips-group">
+                <h4 class="chips-title">Domain Interests (Interest Tags)</h4>
+                <div class="chips-grid">
+                  <label class="choice-chip">
+                    <input type="checkbox" value="AI/ML" class="interest-checkbox" checked />
+                    <svg class="chip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span>AI/ML</span>
+                  </label>
+                  <label class="choice-chip">
+                    <input type="checkbox" value="Data" class="interest-checkbox" checked />
+                    <svg class="chip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span>Data</span>
+                  </label>
+                  <label class="choice-chip">
+                    <input type="checkbox" value="Business" class="interest-checkbox" />
+                    <svg class="chip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span>Business</span>
+                  </label>
+                  <label class="choice-chip">
+                    <input type="checkbox" value="Cloud" class="interest-checkbox" />
+                    <svg class="chip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span>Cloud</span>
+                  </label>
+                  <label class="choice-chip">
+                    <input type="checkbox" value="Security" class="interest-checkbox" />
+                    <svg class="chip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span>Security</span>
+                  </label>
+                  <label class="choice-chip">
+                    <input type="checkbox" value="Product" class="interest-checkbox" />
+                    <svg class="chip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span>Product</span>
+                  </label>
+                  <label class="choice-chip">
+                    <input type="checkbox" value="Marketing" class="interest-checkbox" />
+                    <svg class="chip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span>Marketing</span>
+                  </label>
+                  <label class="choice-chip">
+                    <input type="checkbox" value="Web Apps" class="interest-checkbox" />
+                    <svg class="chip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span>Web Apps</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Learning Topics -->
+              <div class="chips-group">
+                <h4 class="chips-title">Topics to Explore</h4>
+                <div class="chips-grid">
+                  <label class="choice-chip">
+                    <input type="checkbox" value="Generative AI" class="topic-checkbox" checked />
+                    <svg class="chip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span>Generative AI</span>
+                  </label>
+                  <label class="choice-chip">
+                    <input type="checkbox" value="Data Science" class="topic-checkbox" />
+                    <svg class="chip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span>Data Science</span>
+                  </label>
+                  <label class="choice-chip">
+                    <input type="checkbox" value="Cloud Architecture" class="topic-checkbox" />
+                    <svg class="chip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span>Cloud Architecture</span>
+                  </label>
+                  <label class="choice-chip">
+                    <input type="checkbox" value="Product Strategy" class="topic-checkbox" />
+                    <svg class="chip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span>Product Strategy</span>
+                  </label>
+                  <label class="choice-chip">
+                    <input type="checkbox" value="Cybersecurity" class="topic-checkbox" />
+                    <svg class="chip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span>Cybersecurity</span>
+                  </label>
+                  <label class="choice-chip">
+                    <input type="checkbox" value="Full-Stack Development" class="topic-checkbox" />
+                    <svg class="chip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span>Full-Stack Development</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- STEP 4: Review Profile & Confirmation -->
+            <div class="form-step" data-step="4" id="step-pane-4" role="tabpanel" aria-labelledby="step-tab-4">
+              <div class="step-header">
+                <h3 class="step-title">Step 4: Review Profile &amp; Confirm Assessment</h3>
+                <p class="step-desc">Verify your competencies and goals before our AI engine calculates your ranked matches.</p>
+              </div>
+
+              <div class="review-summary-grid">
+                <!-- Review Card 1: Candidate & Aspiration -->
+                <div class="review-card">
+                  <div class="review-card-head">
+                    <span class="review-card-title">Profile &amp; Aspiration</span>
+                    <button type="button" class="review-jump-btn" data-jump="1">Edit Step 1</button>
+                  </div>
+                  <div class="review-meta-item">
+                    <span class="review-meta-label">Candidate Name:</span>
+                    <strong class="review-meta-val" id="review-name">Aisha Sharma</strong>
+                  </div>
+                  <div class="review-meta-item">
+                    <span class="review-meta-label">Learning Level:</span>
+                    <span class="badge-pill badge-cyan" id="review-level">Intermediate</span>
+                  </div>
+                  <div class="review-meta-item">
+                    <span class="review-meta-label">Career Target:</span>
+                    <span class="review-meta-highlight" id="review-goal">AI &amp; ML</span>
+                  </div>
+                </div>
+
+                <!-- Review Card 2: Technical Strengths -->
+                <div class="review-card">
+                  <div class="review-card-head">
+                    <span class="review-card-title">Competency Strengths (&ge; 3.0)</span>
+                    <button type="button" class="review-jump-btn" data-jump="2">Edit Step 2</button>
+                  </div>
+                  <div class="review-pills-wrap" id="review-strengths-pills"></div>
+                  <div class="review-meta-item" style="margin-top: 0.65rem;">
+                    <span class="review-meta-label">Skills to Expand:</span>
+                    <span class="review-meta-muted" id="review-emerging-count">Evaluating ratings...</span>
+                  </div>
+                </div>
+
+                <!-- Review Card 3: Domain Interests & Topics -->
+                <div class="review-card full-width">
+                  <div class="review-card-head">
+                    <span class="review-card-title">Selected Interests &amp; Topics</span>
+                    <button type="button" class="review-jump-btn" data-jump="3">Edit Step 3</button>
+                  </div>
+                  <div class="review-pills-wrap" id="review-interests-pills"></div>
+                </div>
+              </div>
+
+              <!-- Privacy Notice Guarantee -->
+              <div class="privacy-guarantee-banner" role="note">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="privacy-icon" aria-hidden="true">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+                <div class="privacy-text">
+                  <strong>Session Privacy Guarantee:</strong> Your profile inputs are processed locally in your session solely to calculate compatibility scores. No personal or contact information is retained or shared.
+                </div>
+              </div>
+            </div>
+
+            <!-- Wizard Navigation Actions -->
+            <div class="wizard-actions">
+              <button type="button" class="btn-wizard-back" id="wizard-back-btn" disabled>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+                Back
+              </button>
+
+              <button type="button" class="btn-wizard-next" id="wizard-next-btn">
+                Next Step
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+
+              <button type="submit" class="btn-wizard-submit" id="wizard-submit-btn" style="display: none;">
+                <span class="btn-spinner" aria-hidden="true"></span>
+                <span class="btn-text">Generate Verified Career Matches</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              </button>
+            </div>
+          </form>
+
+          <!-- Accessible Error Panel -->
+          <div id="form-error-panel" class="form-error-panel" role="alert" aria-live="assertive"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESULTS SECTION & CAREER DASHBOARD -->
+    <section class="results-section hidden" id="results-section" aria-labelledby="results-student-name">
+      <div class="container">
+        <!-- Results Summary Banner with Actions Toolbar -->
+        <div class="results-summary-card glow-card">
+          <div class="summary-headline">
+            <h2 id="results-student-name">Student's Career Recommendations</h2>
+            <p>Calculated based on your verified skill ratings, target goal, and industry interest overlap.</p>
+          </div>
+          <div class="results-actions-group">
+            <div class="student-tag-group">
+              <span class="badge-pill badge-cyan" id="results-level-badge">Intermediate</span>
+              <span class="badge-pill badge-purple">5 Ranked Career Paths</span>
+            </div>
+            <div class="results-toolbar">
+              <button type="button" class="btn-action-pill" id="btn-print-report" title="Print executive summary or save as PDF">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                <span>Print / Save PDF</span>
+              </button>
+              <button type="button" class="btn-action-pill" id="btn-download-report" title="Download text report of your results">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                <span>Download Summary</span>
+              </button>
+              <a href="https://api.whatsapp.com/send?phone=916304872757&text=Hi%20TechZone%20Academy,%20I%20just%20completed%20my%20AI%20Career%20Assessment%20and%20would%20like%20to%20enquire%20about%20upcoming%20batches." target="_blank" rel="noopener" class="btn-action-pill highlight" title="Chat with an academic counselor on WhatsApp">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                <span>Batch Enquiry</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mandatory Explainability Disclaimer -->
+        <div class="legal-disclaimer-banner" role="note">
+          <svg class="disclaimer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>
+          </svg>
+          <div>
+            <strong>Explainability Notice:</strong> Match score reflects compatibility with the configured assessment criteria, not a probability of employment. Recommendations are dynamically scored using TechZone Academy's weighted evaluation engine.
+          </div>
+        </div>
+
+        <!-- Primary Top-Ranked Career Container -->
+        <div id="primary-career-container" class="career-cards-container"></div>
+
+        <!-- Top 3 Career Comparison Matrix -->
+        <div class="comparison-container glow-card" id="career-comparison-card">
+          <div class="comparison-head">
+            <div>
+              <span class="section-eyebrow">Direct Track Benchmark</span>
+              <h3 class="comparison-title">Top 3 Career Pathways Comparison</h3>
+              <p class="comparison-subtitle">Compare match scores, foundational suitability, aligned strengths, and target course tracks side by side.</p>
+            </div>
+          </div>
+          <div class="comparison-table-wrap" id="comparison-table-wrap">
+            <!-- Dynamically populated via JS from real recommendations -->
+          </div>
+        </div>
+
+        <!-- Secondary Ranked Careers (Ranks #4 - #5) -->
+        <div class="secondary-heading-block" style="margin-bottom: 1.5rem; margin-top: 3.5rem;">
+          <h3 style="font-size: 1.35rem; font-weight: 800; color: var(--text);">Additional High-Compatibility Tracks</h3>
+          <p style="font-size: 0.9rem; color: var(--text-secondary);">Alternative career options matching your broader skill distribution.</p>
+        </div>
+        <div id="secondary-careers-container" class="secondary-cards-grid"></div>
+
+        <!-- Skill-Gap & Vertical Learning Roadmap -->
+        <div class="roadmap-container glow-card" id="roadmap-card">
+          <div class="roadmap-head">
+            <span class="section-eyebrow">Personalized Skill-Gap Roadmap</span>
+            <h3 class="roadmap-title">Sequential Learning Pathway for <span id="roadmap-role-name" style="color: var(--cyan);">Top Role</span></h3>
+            <p class="roadmap-subtitle">
+              Follow this phased course roadmap to bridge high-priority skill gaps and master production-ready competencies.
+            </p>
+          </div>
+          <div class="vertical-roadmap-list" id="roadmap-steps-container"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COURSES SHOWCASE SECTION (CATALOGUE-DRIVEN) -->
+    <section class="courses-section" id="courses-showcase" aria-labelledby="courses-heading">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-eyebrow">Curated TechZone Catalogue</span>
+          <h2 class="section-title" id="courses-heading">Industry-Aligned Programs</h2>
+          <p class="section-subtitle">
+            Explore verified training programs designed by TechZone Academy. Every course features practical labs, generative AI integration, and career-aligned outcomes.
+          </p>
+        </div>
+
+        <!-- Filter & Search Bar -->
+        <div class="course-filter-bar">
+          <div class="course-category-chips" role="tablist" aria-label="Course Category Filters">
+            <button type="button" class="course-cat-btn active" data-course-cat="all">All Programs (13)</button>
+            <button type="button" class="course-cat-btn" data-course-cat="ai">AI & ML</button>
+            <button type="button" class="course-cat-btn" data-course-cat="data">Data Science & Analytics</button>
+            <button type="button" class="course-cat-btn" data-course-cat="cloud">Cloud & Cyber</button>
+            <button type="button" class="course-cat-btn" data-course-cat="web">Full-Stack & Web</button>
+            <button type="button" class="course-cat-btn" data-course-cat="growth">Product & Growth</button>
+          </div>
+
+          <div class="course-search-wrap">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            <input type="text" id="course-search" class="course-search-input" placeholder="Search courses or skills..." aria-label="Search courses by title or skill" />
+          </div>
+        </div>
+
+        <!-- Courses Grid Dynamically Populated from Catalogue -->
+        <div class="courses-grid" id="courses-grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- SITE FOOTER -->
+  <footer class="site-footer" id="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Brand Column -->
+        <div class="footer-brand-col">
+          <a href="https://www.techzoneacademy.in" target="_blank" rel="noopener">
+            <img src="https://www.techzoneacademy.in/images/techzone_logo.png" alt="TechZone Academy Logo" class="footer-logo" />
+          </a>
+          <p class="footer-tagline">
+            Empowering careers in Data Analytics, Data Science and Digital Marketing since 2004.
+          </p>
+          <div style="font-size: 0.85rem; color: var(--text-dim); line-height: 1.5;">
+            TechZone Academy provides cutting-edge, hands-on professional tech programs in Hyderabad with dedicated placement mentorship.
+          </div>
+        </div>
+
+        <!-- Courses Links -->
+        <div>
+          <h4 class="footer-col-title">Featured Courses</h4>
+          <ul class="footer-links-list">
+            <li><a href="https://www.techzoneacademy.in/course/data-analytics-gen-ai" target="_blank" rel="noopener" class="footer-link">Data Analytics with Gen AI</a></li>
+            <li><a href="https://www.techzoneacademy.in/course/data-science-gen-ai" target="_blank" rel="noopener" class="footer-link">Data Science with Gen AI</a></li>
+            <li><a href="https://www.techzoneacademy.in/course/gen-ai-engineering" target="_blank" rel="noopener" class="footer-link">Gen AI Engineering</a></li>
+            <li><a href="https://www.techzoneacademy.in/course/aiml-engineering" target="_blank" rel="noopener" class="footer-link">AIML Engineering</a></li>
+            <li><a href="https://www.techzoneacademy.in/courses#ai-integrated" target="_blank" rel="noopener" class="footer-link">AI-Integrated Programs</a></li>
+          </ul>
+        </div>
+
+        <!-- Company Links -->
+        <div>
+          <h4 class="footer-col-title">Company</h4>
+          <ul class="footer-links-list">
+            <li><a href="https://www.techzoneacademy.in/about" target="_blank" rel="noopener" class="footer-link">About Us</a></li>
+            <li><a href="https://www.techzoneacademy.in/location/lakdikapul" target="_blank" rel="noopener" class="footer-link">Lakdikapul Campus</a></li>
+            <li><a href="https://www.techzoneacademy.in/location/himayatnagar" target="_blank" rel="noopener" class="footer-link">Himayat Nagar Campus</a></li>
+            <li><a href="https://www.techzoneacademy.in/#faq" target="_blank" rel="noopener" class="footer-link">FAQs</a></li>
+            <li><a href="https://www.techzoneacademy.in/#testimonials" target="_blank" rel="noopener" class="footer-link">Student Stories</a></li>
+            <li><a href="https://www.techzoneacademy.in/contact" target="_blank" rel="noopener" class="footer-link">Contact</a></li>
+            <li><a href="https://www.techzoneacademy.in/privacy-policy" target="_blank" rel="noopener" class="footer-link">Privacy Policy</a></li>
+            <li><a href="https://www.techzoneacademy.in/terms-and-conditions" target="_blank" rel="noopener" class="footer-link">Terms & Conditions</a></li>
+          </ul>
+        </div>
+
+        <!-- Campuses & Direct Contact -->
+        <div>
+          <h4 class="footer-col-title">Campus Locations</h4>
+          <div class="contact-branch-block">
+            <h5 class="branch-title">Lakdikapul Branch</h5>
+            <p class="branch-address">
+              Second Floor, Chicha's Restaurant Lane, P & T Officers Colony, Veer Nagar, Lakdikapul, Hyderabad, Telangana 500004
+            </p>
+            <a href="tel:+916304872757" class="branch-phone-link">+91 63048 72757</a>
+            <a href="tel:+919182220758" class="branch-phone-link">+91 91822 20758</a>
+          </div>
+
+          <div class="contact-branch-block">
+            <h5 class="branch-title">Himayat Nagar Branch</h5>
+            <p class="branch-address">
+              Skill Spectrum, Badam Galli, Gagan Mahal, Domalguda, Himayatnagar, Hyderabad, Telangana 500029
+            </p>
+            <a href="tel:+919246876444" class="branch-phone-link">+91 92468 76444</a>
+          </div>
+
+          <div style="margin-top: 0.75rem;">
+            <a href="mailto:tzacademy.official@gmail.com" class="branch-phone-link" style="color: var(--cyan); font-weight: 600;">
+              tzacademy.official@gmail.com
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer Bottom Bar -->
+      <div class="footer-bottom-bar">
+        <span>&copy; 2026 TechZone Academy. All rights reserved.</span>
+        <button type="button" class="btn-back-to-top" id="back-to-top" aria-label="Scroll back to top of page">
+          Back to top
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
+        </button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Main Application Logic -->
+  <script src="{{ url_for('static', filename='app.js') }}?v=2"></script>
 </body>
 </html>

@@ -1,148 +1,88 @@
-"""Generate synthetic career recommendation dataset."""
+"""Generate a transparent, synthetic TechZone assessment dataset for testing."""
 
-import os
+from __future__ import annotations
+
+import csv
+import json
+import random
 from pathlib import Path
 
-import numpy as np
-import pandas as pd
+from recommendation_engine import load_careers
 
-RANDOM_STATE = 42
-N_SAMPLES = 3000
-NOISE_RATE = 0.10
-
-INTEREST_AREAS = [
-    "AI/ML",
-    "Coding",
-    "Business",
-    "Networking",
-    "Design",
-    "Data",
-    "Security",
-    "Management",
-]
-
-CAREERS = [
-    "Machine Learning",
-    "Software Development",
-    "Data Science",
-    "Product Management",
-    "Cybersecurity",
-    "Cloud Engineering",
-    "UI/UX Design",
-    "Business Analytics",
-]
+RANDOM_SEED = 42
+SAMPLE_COUNT = 500
 
 
-def _assign_career(row: pd.Series) -> str:
-    """Assign career label using rule-based scoring (highest score wins)."""
-    prog = row["programming_skill"]
-    math = row["math_skill"]
-    comm = row["communication_skill"]
-    logic = row["logic_score"]
-    apt = row["aptitude_score"]
-    interest = row["interest_area"]
+def generate_profile(rng: random.Random) -> dict[str, object]:
+    career_profiles = load_careers()
+    chosen = rng.choice(career_profiles)
+    learning_levels = ["Beginner", "Intermediate", "Advanced"]
+    interests = ["AI/ML", "Data", "Business", "Cloud", "Security", "Product", "Marketing", "Web Apps"]
+    topics = ["Generative AI", "Data Science", "Cloud Architecture", "Product Strategy", "Cybersecurity", "Full-Stack Development"]
 
-    scores = {}
-
-    # Machine Learning
-    if prog >= 7 and math >= 7 and interest in ("AI/ML", "Data"):
-        scores["Machine Learning"] = (prog - 6) + (math - 6) + 2
-
-    # Software Development
-    if prog >= 7 and logic >= 6 and interest == "Coding":
-        scores["Software Development"] = (prog - 6) + (logic - 5) + 2
-
-    # Data Science
-    if math >= 7 and prog >= 6 and interest in ("Data", "AI/ML"):
-        scores["Data Science"] = (math - 6) + (prog - 5) + 2
-
-    # Product Management
-    if comm >= 7 and apt >= 65 and interest in ("Business", "Management"):
-        scores["Product Management"] = (comm - 6) + (apt - 64) / 10 + 2
-
-    # Cybersecurity
-    if logic >= 7 and interest in ("Security", "Networking"):
-        scores["Cybersecurity"] = (logic - 6) + 2
-
-    # Cloud Engineering
-    if prog >= 6 and logic >= 6 and interest == "Networking":
-        scores["Cloud Engineering"] = (prog - 5) + (logic - 5) + 2
-
-    # UI/UX Design
-    if comm >= 6 and interest == "Design":
-        scores["UI/UX Design"] = (comm - 5) + 2
-
-    # Business Analytics
-    if math >= 6 and comm >= 6 and interest in ("Business", "Data"):
-        scores["Business Analytics"] = (math - 5) + (comm - 5) + 2
-
-    if scores:
-        return max(scores, key=scores.get)
-
-    # Fallback: nearest career by dominant traits
-    fallback_scores = {
-        "Machine Learning": prog + math + (2 if interest in ("AI/ML", "Data") else 0),
-        "Software Development": prog + logic + (2 if interest == "Coding" else 0),
-        "Data Science": math + prog + (2 if interest in ("Data", "AI/ML") else 0),
-        "Product Management": comm + apt / 20 + (2 if interest in ("Business", "Management") else 0),
-        "Cybersecurity": logic + (2 if interest in ("Security", "Networking") else 0),
-        "Cloud Engineering": prog + logic + (2 if interest == "Networking" else 0),
-        "UI/UX Design": comm + (2 if interest == "Design" else 0),
-        "Business Analytics": math + comm + (2 if interest in ("Business", "Data") else 0),
+    skills = {
+        "Python": rng.randint(0, 5),
+        "SQL": rng.randint(0, 5),
+        "Data Analysis": rng.randint(0, 5),
+        "Machine Learning": rng.randint(0, 5),
+        "Deep Learning": rng.randint(0, 5),
+        "Cloud Platforms": rng.randint(0, 5),
+        "Cybersecurity": rng.randint(0, 5),
+        "Full-Stack Development": rng.randint(0, 5),
+        "Product Management": rng.randint(0, 5),
+        "Digital Marketing": rng.randint(0, 5),
+        "Communication": rng.randint(0, 5),
+        "Problem Solving": rng.randint(0, 5),
     }
-    return max(fallback_scores, key=fallback_scores.get)
 
+    base_interest = chosen["interest_tags"]
+    selected_interests = list(dict.fromkeys(base_interest + rng.sample(interests, rng.randint(0, 2))))
+    selected_topics = list(dict.fromkeys(chosen["related_courses"][:2] + rng.sample(topics, rng.randint(1, 3))))
 
-def generate_dataset(n_samples: int = N_SAMPLES) -> pd.DataFrame:
-    rng = np.random.default_rng(RANDOM_STATE)
+    for skill_name in chosen["required_skills"]:
+        skills[skill_name] = max(skills.get(skill_name, 0), rng.randint(2, 5))
 
-    programming_skill = rng.integers(1, 11, size=n_samples)
-    math_skill = rng.integers(1, 11, size=n_samples)
-    communication_skill = rng.integers(1, 11, size=n_samples)
-    logic_score = rng.integers(1, 11, size=n_samples)
-    cgpa = np.round(rng.uniform(5.0, 10.0, size=n_samples), 1)
-    aptitude_score = rng.integers(40, 101, size=n_samples)
-    interest_area = rng.choice(INTEREST_AREAS, size=n_samples)
-
-    df = pd.DataFrame(
-        {
-            "programming_skill": programming_skill,
-            "math_skill": math_skill,
-            "communication_skill": communication_skill,
-            "logic_score": logic_score,
-            "cgpa": cgpa,
-            "aptitude_score": aptitude_score,
-            "interest_area": interest_area,
-        }
-    )
-
-    df["career"] = df.apply(_assign_career, axis=1)
-
-    # ~10% controlled label noise
-    n_flip = int(n_samples * NOISE_RATE)
-    flip_idx = rng.choice(n_samples, size=n_flip, replace=False)
-    for idx in flip_idx:
-        current = df.at[idx, "career"]
-        others = [c for c in CAREERS if c != current]
-        df.at[idx, "career"] = rng.choice(others)
-
-    return df
+    return {
+        "student_id": f"STU-{rng.randint(1000, 9999)}",
+        "student_name": f"Student_{rng.randint(100, 999)}",
+        "learning_level": rng.choice(learning_levels),
+        "career_goal": chosen["career_name"],
+        "interests": json.dumps(selected_interests),
+        "skills": json.dumps(skills),
+        "learning_topics": json.dumps(selected_topics),
+        "synthetic_label": chosen["career_name"],
+        "note": "Synthetic assessment example for local testing only. Not real student data.",
+    }
 
 
 def main() -> None:
+    rng = random.Random(RANDOM_SEED)
+    profiles = [generate_profile(rng) for _ in range(SAMPLE_COUNT)]
+
     base_dir = Path(__file__).resolve().parent
     data_dir = base_dir / "data"
     data_dir.mkdir(parents=True, exist_ok=True)
+    out_path = data_dir / "techzone_synthetic_candidates.csv"
 
-    df = generate_dataset()
-    out_path = data_dir / "career_dataset.csv"
-    df.to_csv(out_path, index=False)
+    fieldnames = [
+        "student_id",
+        "student_name",
+        "learning_level",
+        "career_goal",
+        "interests",
+        "skills",
+        "learning_topics",
+        "synthetic_label",
+        "note",
+    ]
 
-    print(f"Generated {len(df)} records -> {out_path}")
-    print("\nCareer distribution:")
-    print(df["career"].value_counts().sort_index())
-    print("\nInterest area distribution:")
-    print(df["interest_area"].value_counts().sort_index())
+    with out_path.open("w", encoding="utf-8", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(profiles)
+
+    print(f"Generated {len(profiles)} synthetic assessment rows -> {out_path}")
+    print("This dataset is explicitly synthetic and should not be treated as actual student data.")
 
 
 if __name__ == "__main__":
